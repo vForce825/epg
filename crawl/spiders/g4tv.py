@@ -7,7 +7,7 @@ def get_epgs_4gtv(channel, channel_id, dt, func_arg):
     success = 1
     url = 'https://www.4gtv.tv/ProgList/%s.txt' % (channel_id)
     try:
-        res = requests.get(url, headers=headers,timeout=8)
+        res = requests.get(url, headers=headers,timeout=8,verify=False)
         res.encoding = 'utf-8'
         res_json = res.json()
         for j in res_json:
@@ -58,7 +58,7 @@ def get_channels_4gtv():
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36',
     })
-    res = requests.get(url,headers = headers)
+    res = requests.get(url,headers = headers,verify=False)
     res.encoding = 'utf-8'
     js = res.json()['Data']
     channels = []

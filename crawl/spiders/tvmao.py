@@ -13,7 +13,7 @@ def get_desc(url_part):  # 获取节目介绍,总是出问题，暂不使用
     return ''
     try:
         url = 'https://m.tvmao.com' + url_part
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         if soup.select('div.section'):
@@ -24,7 +24,7 @@ def get_desc(url_part):  # 获取节目介绍,总是出问题，暂不使用
         desc = ''
     return desc.replace('\r', '\n').replace('\n\n', '\n').replace('\n\n', '\n')
 def get_morning_lis(url, today):  # 获取当天上午的lis，如果不是当天，另外处理,today参数为是否当天
-    res = requests.get(url, headers=headers,timeout=5)
+    res = requests.get(url, headers=headers,timeout=5,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text, 'html.parser')
     lis = soup.select('ul#pgrow > li')
@@ -32,7 +32,7 @@ def get_morning_lis(url, today):  # 获取当天上午的lis，如果不是当�
 
 def get_token():
     url = 'https://www.tvmao.com/servlet/accessToken?p=channelEpg'
-    res = requests.get(url,headers = headers,timeout = 5)
+    res = requests.get(url,headers = headers,timeout = 5,verify=False)
     res.encoding = 'utf-8'
     res_json = res.json()
     if res_json[0]:
@@ -112,7 +112,7 @@ def get_epgs_tvmao(channel, channel_id, dt, func_arg):
             'w':need_weekday,
             'token':get_token()['token'],
         }
-        res = requests.post(afternoon_url, headers=headers,data=data, timeout=30)
+        res = requests.post(afternoon_url, headers=headers,data=data, timeout=30,verify=False)
         lss = res.json()[1]
         if res.json()[0] == -2:
             msg = '^v^========被电视猫BAN掉了，等待 %s 秒！' % sleep_time
@@ -205,7 +205,7 @@ def get_epgs_tvmao2(channel,channel_id,dt,func_arg):
         id = channel_id
     url = "https://lighttv.tvmao.com/qa/qachannelschedule?epgCode=%s&op=getProgramByChnid&epgName=&isNew=on&day=%s"%(id,need_weekday)
     try:
-        res = requests.get(url,headers = headers)
+        res = requests.get(url,headers = headers,verify=False)
         res_j = res.json()
         datas = res_j[2]['pro']
         for data in datas:
@@ -236,7 +236,7 @@ def get_epgs_tvmao2(channel,channel_id,dt,func_arg):
 
 def get_channels_tvmao():
     url_sort = 'https://www.tvmao.com/program/playing/'
-    res = requests.get(url_sort,headers = headers,timeout = 5)
+    res = requests.get(url_sort,headers = headers,timeout = 5,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text,'html.parser')
     provinces = {}
@@ -264,7 +264,7 @@ def get_channels_tvmao():
     for sort_name in sorts:
         url = 'https://www.tvmao.com/program/playing/%s'%sorts[sort_name]
         time.sleep(0.5)
-        res = requests.get(url,headers = headers,timeout = 5)
+        res = requests.get(url,headers = headers,timeout = 5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text,'html.parser')
         channel_trs = soup.select('table.timetable > tr')

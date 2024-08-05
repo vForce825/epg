@@ -28,7 +28,7 @@ def get_epgs_chuanliu(channel, channel_id, dt, func_arg):
     need_date = dt.strftime('%Y-%m-%d')
     url = 'http://epg.iqy.sc96655.com/v1/getPrograms?channel=%s&begin_time=%s 00:00:00&end_time=%s 23:59:59&partner=2'%(channel_id,need_date,need_date)
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         ret_data = res.json()['ret_data']
         n = 0 #计数 节目表的第几个节目
@@ -77,7 +77,7 @@ def get_channels_chuanliu():
         '1013':'8K超高清',
     }
     url = 'http://epg.iqy.sc96655.com/v1/getChannels?partner=2&terminal=&definition=&citycode=&adcode=&charge_type=&channel_type='
-    res = requests.get(url, headers=headers)
+    res = requests.get(url, headers=headers,verify=False)
     res.encoding = 'utf-8'
     j = res.json()
     ret_data = j['ret_data']
@@ -101,7 +101,7 @@ def get_channels_chuanliu():
     return channels
 def get_sorts_type():
     url = 'http://epg.iqy.sc96655.com/v1/getChannelType?partner=2&terminal='
-    res = requests.get(url ,headers =headers)
+    res = requests.get(url ,headers =headers,verify=False)
     ret_data = res.json()['ret_data']
     n = 0
     for j in ret_data:

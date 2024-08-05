@@ -14,7 +14,7 @@ def get_epgs_zhongshu(channel, channel_id, dt, func_arg):
         w = 1
     url = '%s/epg/%s/live/index.php?week=%s' % (host,channel_id,w)
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         rs = re.findall('epgs\[\d+\]=new Array\(\"(\d+)\",\"(\d+)\",\"(\d+:\d+)\", \"(.+?)\",.+?\)',res.text) #0 月 1日 2时间 3节目
     except Exception as e:
         msg = 'spider-zhongshu-request-%s'%e
@@ -56,7 +56,7 @@ def get_epgs_zhongshu(channel, channel_id, dt, func_arg):
 def get_channels_zhongshu():
     channels = []
     host = 'http://epg.tv.cn/'
-    res = requests.get(host, headers=headers)
+    res = requests.get(host, headers=headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text, 'html.parser')
     uls = soup.select('div.epgleft > ul')

@@ -10,7 +10,7 @@ def get_epgs_mod(channel, channel_id, dt, func_arg):
     url = 'http://mod.cht.com.tw/tv/channel.php?id=%s&d=%s' % (
     channel_id, days)  # d=0表示当天，至少能获取最近七天数据  http://mod.cht.com.tw/tv/channel.php?id=6&d=2
     try:
-        res = requests.get(url, headers=headers,timeout=8)
+        res = requests.get(url, headers=headers,timeout=8,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         old_dt = datetime.datetime(1999, 12, 31, 12, 12)
@@ -45,7 +45,7 @@ def get_epgs_mod(channel, channel_id, dt, func_arg):
 def get_channels_mod():
     # http://mod.cht.com.tw/tv/channel.php?id=006   采集节目表地址
     url = 'http://mod.cht.com.tw/bepg2/'
-    res = requests.get(url,timeout = 10)
+    res = requests.get(url,timeout = 10,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text, 'html.parser')
     divs = soup.select('div.rowat')

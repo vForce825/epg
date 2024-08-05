@@ -9,7 +9,7 @@ def get_epgs_tbc(channel, channel_id, dt, func_arg):
     channel_id = channel_id.replace('tbc','')
     url = 'https://www.tbc.net.tw/EPG/Channel?channelId=%s'%channel_id
     try:
-        res = requests.get(url, timeout=30)
+        res = requests.get(url, timeout=30,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         uls = soup.select('ul.list_program2')
@@ -60,7 +60,7 @@ def get_channels_tbc():
         'ASP.NET_SessionId':'v111fiox1mzc0wpc0d4iue5c'
     }
     url = 'https://www.tbc.net.tw/EPG'
-    res = requests.get(url,headers = headers,cookies = cookies,timeout = 6)
+    res = requests.get(url,headers = headers,cookies = cookies,timeout = 6,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text,'html.parser')
     lis = soup.select('ul.list_tv > li')

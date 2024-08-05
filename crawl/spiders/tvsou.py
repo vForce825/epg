@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 def get_desc_tvsou(url):
     return ''
     try:
-        res = requests.get(url, headers=headers,timeout = 5)
+        res = requests.get(url, headers=headers,timeout = 5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         s = soup.select('div.prog_content_txt')[0].text
@@ -27,7 +27,7 @@ def get_epgs_tvsou(channel, channel_id_, dt, func_arg):
 
     #url = 'https://www.tvsou.com/epg/%s_w%s' % (channel_id_, need_weekday)
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         rows = soup.select('table.layui-table')[0].select('tr')
@@ -92,7 +92,7 @@ def get_channels_tvsou():
     sorts = []
     host = 'https://www.tvsou.com'
     url = '%s/%s'%(host,'epg/difang/')
-    res = requests.get(url,headers = headers)
+    res = requests.get(url,headers = headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text,'html.parser')
     div_sorts = soup.select('div.pd_list > div.pd_tit')

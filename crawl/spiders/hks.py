@@ -10,7 +10,7 @@ def get_epgs_hks(channel, channel_id, dt, func_arg):
     url = 'http://www.hkstv.tv/index/live.html'
 
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         lis = soup.select('div.living-list ul > li')

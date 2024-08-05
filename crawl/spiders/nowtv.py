@@ -20,7 +20,7 @@ def get_epgs_nowtv(channel, channel_id, dt, func_arg):
     success = 1
     url = 'http://nowtv.now.com/gw-epg/epg/zh_tw/%s/prf0/resp-genre/ch_%s.json' % (dt.strftime("%Y%m%d"),channel_id[:3]) #d=0表示当天，至少能获取最近七天数据
     try:
-        res = requests.get(url, headers=headers,timeout = 8)
+        res = requests.get(url, headers=headers,timeout = 8,verify=False)
         res.encoding = 'utf-8'
         j = res.json()
         chs = j['data']['chProgram'] #很多频道的这一天的节目表
@@ -57,7 +57,7 @@ def get_epgs_nowtv(channel, channel_id, dt, func_arg):
 # 获取所有最新频道列表
 def get_channels_nowtv():
     url = 'http://nowtv.now.com/gw-epg/epg/channelMapping.zh-TW.js'
-    res = requests.get(url,headers = headers,timeout=10)
+    res = requests.get(url,headers = headers,timeout=10,verify=False)
     res.encoding = 'utf-8'
     reinfo = re.search('.+?var ChannelMapping=(.*)var GenreToChanne',res.text,re.DOTALL)
     cs = reinfo.group(1)[:-2]

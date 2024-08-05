@@ -10,7 +10,7 @@ def get_epgs_mytvsuper(channel, channel_id, dt, func_arg):#channel_id,dt ，每�
     end_date_str = end_date.strftime('%Y%m%d')
     url = 'https://content-api.mytvsuper.com/v1/epg?network_code=%s&from=%s&to=%s&platform=web '%(channel_id,start_date_str,end_date_str)
     try:
-        res = requests.get(url,timeout = 8,headers = headers)
+        res = requests.get(url,timeout = 8,headers = headers,verify=False)
         res.encoding = 'utf-8'
         res_j = res.json()
         items = res_j[0]['item']
@@ -53,7 +53,7 @@ def get_epgs_mytvsuper(channel, channel_id, dt, func_arg):#channel_id,dt ，每�
     return ret
 def get_channels_mytvsuper():
     url = 'https://content-api.mytvsuper.com/v1/channel/list?platform=web'
-    res = requests.get(url,headers = headers)
+    res = requests.get(url,headers = headers,verify=False)
     res_channels = res.json()['channels']
     channels = []
     for li in res_channels:

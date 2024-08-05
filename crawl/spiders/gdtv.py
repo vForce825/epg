@@ -9,7 +9,7 @@ def get_epgs_gdtv(channel, channel_id, dt, func_arg):
     success = 1
     try:
         url = 'http://epg.gdtv.cn/f/%s/%s.xml'%(channel_id,dt.strftime('%Y-%m-%d'))
-        res = requests.get(url,headers = headers,timeout=8)
+        res = requests.get(url,headers = headers,timeout=8,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         epgs_contents = soup.select('content')
@@ -41,7 +41,7 @@ def get_epgs_gdtv(channel, channel_id, dt, func_arg):
 
 def get_channels_gdtv():
     url = 'http://epg.gdtv.cn/f/1.xml'
-    res = requests.get(url,headers = headers)
+    res = requests.get(url,headers = headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text,'html.parser')
     contents = soup.select('channel')

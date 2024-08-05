@@ -26,7 +26,7 @@ def get_epgs_gxntv(channel, channel_id, dt, func_arg):
             }
     try:
         url = 'https://api2019.gxtv.cn/memberApi/programList/selectListByChannelId'
-        res = requests.post(url,headers = headers,timeout=8,data= data)
+        res = requests.post(url,headers = headers,timeout=8,data= data,verify=False)
         res.encoding = 'utf-8'
         res_json = res.json()
         epgs_contents = res_json['data']
@@ -60,7 +60,7 @@ def get_epgs_gxntv(channel, channel_id, dt, func_arg):
 
 def get_channels_gxntv():
     url = 'https://program.gxtv.cn/'
-    res = requests.get(url,headers = headers)
+    res = requests.get(url,headers = headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text,'html.parser')
     contents = soup.select('#TV_tab > ul > li')

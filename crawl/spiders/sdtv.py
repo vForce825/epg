@@ -12,7 +12,7 @@ def get_epgs_sdtv(channel, channel_id, dt, func_arg):
     try:
         url = 'http://module.iqilu.com/media/apis/main/getprograms?jsonpcallback=jQuery37004547755401387288_%s&channelID=%s&date=%s&_=%s' % (
             t, channel_id, dt, t)
-        res = requests.get(url, timeout=8)
+        res = requests.get(url, timeout=8,verify=False)
         res.encoding = 'utf-8'
         re_j = re.search('.+?\((.+?)\)', res.text, re.DOTALL).group(1)
         re_json = json.loads(re_j)
@@ -46,7 +46,7 @@ def get_epgs_sdtv(channel, channel_id, dt, func_arg):
 
 def get_channels_sdtv():
     url = 'http://v.iqilu.com/live/qlpd/'
-    res = requests.get(url)
+    res = requests.get(url,verify=False)
     res.encoding = 'utf-8'
     re_l = re.search('var channels = (.+?);', res.text, re.DOTALL).group(1)
     contents = re.findall(

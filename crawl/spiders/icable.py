@@ -7,7 +7,7 @@ def get_epgs_icable(channel, channel_id, dt, func_arg):
     success = 1
     url = 'http://epg.i-cable.com/ci/channel/epg/%s/%s?api=api&locale=chi'%(channel_id,dt.strftime('%Y%m%d'))
     try:
-        res = requests.get(url, headers=headers,timeout = 8)
+        res = requests.get(url, headers=headers,timeout = 8,verify=False)
         res.encoding = 'utf-8'
         js = res.json()
         epg_list = js['epgs']
@@ -44,7 +44,7 @@ def get_epgs_icable(channel, channel_id, dt, func_arg):
 
 def get_channels_icable():
     url = 'http://epg.i-cable.com/ci/home/?api=api&locale=chi'
-    res = requests.get(url)
+    res = requests.get(url,verify=False)
     res_json = res.json()
     channels_json = res_json['channels']
     channels = []

@@ -17,7 +17,7 @@ def get_epgs_btv(channel, channel_id, dt, func_arg):
     url = "https://dynamic.rbc.cn/bvradio_app/service/LIVE?functionName=getCurrentChannel&channelId=%s&curdate=%s"%(channel_id, need_date)
 
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         res_j = res.json()['channel']['programes']
         old_dt = datetime.datetime(1999, 12, 31, 12, 12)
@@ -59,7 +59,7 @@ def get_epgs_btv(channel, channel_id, dt, func_arg):
 def get_channels_btv():
     channels = []
     url= 'https://www.brtv.org.cn/gbdsb.shtml'
-    res = requests.get(url, headers=headers)
+    res = requests.get(url, headers=headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text, 'html.parser')
     lis = soup.select('div.conWrapper > div.templateBox > ul > li')

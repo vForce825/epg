@@ -15,7 +15,7 @@ def get_epgs_tvb(channel, channel_id, dt, func_arg):#channel_id,dt
     dt_str = dt.strftime('%Y%m%d')
     url = 'https://programme.tvb.com/api/schedule?input_date=%s&network_code=%s'%(dt_str,channel_id)
     try:
-        res = requests.get(url,timeout = 8,headers = headers)
+        res = requests.get(url,timeout = 8,headers = headers,verify=False)
         res.encoding = 'utf-8'
         res_j = res.json()
         epg_list = res_j['data']['list'][0]['schedules']
@@ -58,7 +58,7 @@ def get_epgs_tvb_old(channel, channel_id, dt, func_arg):#只需要channel_id即�
     success = 1
     url = 'http://programme.tvb.com/%s/week/'%channel_id
     try:
-        res = requests.get(url,timeout = 8,headers = headers)
+        res = requests.get(url,timeout = 8,headers = headers,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text.replace('/>','>'),'html.parser')
         lis = soup.select('div.channel > ul > li')
@@ -93,7 +93,7 @@ def get_epgs_tvb_old(channel, channel_id, dt, func_arg):#只需要channel_id即�
 
 def get_channels_tvb():
     url = 'https://programme.tvb.com/assets/index.85ba94a8.js'
-    res = requests.get(url)
+    res = requests.get(url,verify=False)
     res_re = re.search('const e\=(.+?),n\=', res.text)
     channels_str = res_re.group(1)
     channels_str = channels_str.encode('raw_unicode_escape').decode('unicode_escape').strip().replace('null','0')

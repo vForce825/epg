@@ -8,7 +8,7 @@ def get_epgs_cabletv(channel, channel_id, dt, func_arg):
     success = 0  # 设置采集成功为否
     epgs = []
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         trs = soup.select('div#LiScrollContent > table > tr')
@@ -61,7 +61,7 @@ def get_channels_cabletv():  #使用原来代码，只更改输出
     }
     for x in range(10):
         url =  'http://www.cabletv.com.hk/ct/cabletv.php?id=%s'%(x+1)
-        res = requests.get(url,headers = headers1)
+        res = requests.get(url,headers = headers1,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text,'html.parser')
         dds1 = soup.select('div.channel > dl.list > dd')
@@ -69,7 +69,7 @@ def get_channels_cabletv():  #使用原来代码，只更改输出
     us = ['id=11&cid=187','id=5&cid=85','id=1&cid=267','id=2&cid=188','id=3&cid=73','id=6&cid=234','id=7&cid=139','id=8&cid=109','id=9&cid=21']
     for u in us:  #获取不同类别的频道的，频道名称
         url = 'http://www.cabletv.com.hk/ct/_cabletv_list_common.php?%s'%u
-        res = requests.get(url, headers=headers)
+        res = requests.get(url, headers=headers,verify=False)
         res.encoding = 'utf-8'
         soup = bs(res.text, 'html.parser')
         lis1 = soup.select('ul.selector_list > li')

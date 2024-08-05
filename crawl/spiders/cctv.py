@@ -11,7 +11,7 @@ def get_epgs_cctv(channel, channel_id, dt, func_arg):
     need_date = dt.strftime('%Y%m%d')
     url = 'http://api.cntv.cn/epg/getEpgInfoByChannelNew?c=%s&serviceId=tvcctv&d=%s&t=jsonp&cb=set'%(channel_id,need_date)
     try:
-        res = requests.get(url, headers=headers,timeout=5)
+        res = requests.get(url, headers=headers,timeout=5,verify=False)
         res.encoding = 'utf-8'
         programs = json.loads(re.search('set\((.*)\)', res.text).group(1))
         prog_lists = programs['data'][channel_id]['list']
@@ -45,7 +45,7 @@ def get_channels_cctv():
     channels = []
     host = 'https://tv.cctv.com'
     url = '%s/epg/index.shtml' % host
-    res = requests.get(url, headers=headers)
+    res = requests.get(url, headers=headers,verify=False)
     res.encoding = 'utf-8'
     soup = bs(res.text, 'html.parser')
     lis = soup.select('div.channel_con > div > ul > li')
@@ -54,7 +54,7 @@ def get_channels_cctv():
         id = li.select('img')[0].attrs['title'].strip()
         logo = 'http://' + li.select('img')[0].attrs['src'].strip()
         url_info = 'http://api.cntv.cn/epg/getEpgInfoByChannelNew?c=%s&serviceId=tvcctv&d=%s&t=jsonp&cb=set' % (id, need_date)
-        res = requests.get(url_info,headers = headers,timeout = 5)
+        res = requests.get(url_info,headers = headers,timeout = 5,verify=False)
         res.encoding = 'utf-8'
         research = re.search('"channelName":"(.+?)".+?"lvUrl":"(.+?)"',res.text)
         name = research.group(1)
